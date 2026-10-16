@@ -5,8 +5,28 @@
   const json = (body, status = 200) => new Response(JSON.stringify(body), {status, headers: {'Content-Type': 'application/json'}});
   // Cache del browser: ?v= cambia ogni 5 minuti; i mesi di mercato passati non cambiano più e si leggono senza ?v=.
   const get = async (path, cached = false) => { const r = await original(cached ? path : path + '?v=' + Math.floor(Date.now() / 300000)); if (!r.ok) throw Error('HTTP ' + r.status); return r.json(); };
-  let stato = null;
-  const readStato = () => (stato ||= get('dati/stato.json').catch(e => { stato = null; throw e; }));
+  // stato.json si rilegge ogni 5 minuti (stesso ?v=): il riquadro di stato resta aggiornato senza ricaricare la pagina.
+  let stato = null, statoBucket = 0, firstPublished = null;
+  const readStato = () => {
+    const bucket = Math.floor(Date.now() / 300000);
+    if (stato && bucket !== statoBucket) stato = null;
+    statoBucket = bucket;
+    return (stato ||= get('dati/stato.json').then(s => { firstPublished ??= s.publishedAt || null; return s; }).catch(e => { stato = null; throw e; }));
+  };
+  // Battito: ultimo controllo riuscito dell'estensione anche senza dati nuovi (ramo «battito»).
+  // Dall'API di GitHub (cache di 60 s; 60 richieste l'ora per chi guarda): letto al massimo ogni 2 minuti.
+  const repoPath = (() => { const u = new URL(location.href), m = u.hostname.match(/^([A-Za-z0-9-]+)\.github\.io$/i), r = u.pathname.split('/').filter(Boolean)[0]; return m && r && /^[A-Za-z0-9._-]+$/.test(r) ? m[1] + '/' + r : null; })();
+  let beat = null, beatTime = 0;
+  async function readBeat() {
+    if (!repoPath || Date.now() - beatTime < 120000) return beat;
+    beatTime = Date.now();
+    try {
+      const r = await original('https://api.github.com/repos/' + repoPath + '/contents/battito.json?ref=battito');
+      if (r.ok) { const d = await r.json(); beat = JSON.parse(new TextDecoder().decode(Uint8Array.from(atob(String(d.content).replace(/\s/g, '')), c => c.charCodeAt(0)))); }
+    } catch {}
+    return beat;
+  }
+  const later = (a, b) => !a ? b || null : !b ? a : Date.parse(a) >= Date.parse(b) ? a : b;
   // Ogni file con il suo catch: una fotografia mancante o rotta non svuota la pagina.
   const snapshots = async (n = Infinity) => {
     const list = (await readStato()).snapshots || [];
@@ -62,7 +82,7 @@
   async function api(path) {
     try {
       if (path === '/api/snapshot') { const s = await readStato(); return json({schema: 1, history: await snapshots(1), checkedAt: s.status?.checkedAt || null}); }
-      if (path === '/api/status') { const s = await readStato(), rows = await readFiscal(); return json({status: s.status, fiscal: rows.length ? {ok: true, regions: new Set(rows.map(r => r.name)).size, days: new Set(rows.map(r => r.day)).size} : null, countryId: null, intervalMinutes: 5, rates: 0, stateRates: null, provinceRates: null, rateNames: null, ratesShape: null, market: s.market?.status || null}); }
+      if (path === '/api/status') { const s = await readStato(), rows = await readFiscal(), b = await readBeat(); const dataAt = s.status?.checkedAt || null, newData = !!firstPublished && (s.publishedAt !== firstPublished || !!(b?.publishedAt && Date.parse(b.publishedAt) > Date.parse(firstPublished))); return json({dataAt, newData, status: {...(s.status || {}), checkedAt: later(dataAt, b?.checkedAt)}, fiscal: rows.length ? {ok: true, regions: new Set(rows.map(r => r.name)).size, days: new Set(rows.map(r => r.day)).size} : null, countryId: null, intervalMinutes: 5, rates: 0, stateRates: null, provinceRates: null, rateNames: null, ratesShape: null, market: s.market?.status || null}); }
       if (path === '/api/market') { const m = await market(); return m ? json(m) : json({error: 'Mercato non ancora pubblicato'}, 503); }
       if (path === '/api/public-world') return json(await get('dati/mondo.json'));
       return json({error: 'Percorso non disponibile'}, 404);

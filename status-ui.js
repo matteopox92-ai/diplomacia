@@ -16,6 +16,8 @@
     $('.c-text').textContent = s.message || '';
     const facts = [];
     if (s.checkedAt) facts.push('Ultimo controllo riuscito: ' + time(s.checkedAt));
+    if (info.dataAt && info.dataAt !== s.checkedAt) facts.push('Ultimi dati nuovi: ' + time(info.dataAt) + ' (dopo, nessuna novità nel gioco)');
+    if (info.newData) facts.push('Sono arrivati dati più recenti: premi «Aggiorna ora» per vederli');
     if (!document.documentElement.classList.contains('sito')) facts.push('Controllo automatico ogni ' + info.intervalMinutes + ' minuti con il gioco aperto');
     // Lo stato salvato dalle versioni 3.x ha un formato diverso: si mostra solo quello della 4.0.
     if (info.fiscal?.ok && Number.isInteger(info.fiscal.regions)) facts.push('Gettito: ' + info.fiscal.regions + ' regioni, ' + info.fiscal.days + ' giorni');
