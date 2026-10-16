@@ -13,6 +13,29 @@
     if (n === 1) { for (let i = list.length - 1; i >= 0; i--) { const s = await get(list[i]).catch(() => null); if (s?.items) return [s]; } return []; }
     return (await Promise.all(list.slice(-n).map(p => get(p).catch(() => null)))).filter(s => s?.items);
   };
+  // Storico giornaliero dell'ultimo anno (dati/storico/AAAA-MM.json): si ricostruisce una fotografia per giorno.
+  // Le voci che il file non porta (regione, bandiera…) si prendono dalla fotografia più recente della stessa provincia.
+  const runsToArray = (runs, n) => { const out = []; for (const [v, k] of runs || []) for (let i = 0; i < k; i++) out.push(v); while (out.length < n) out.push(null); return out; };
+  function expand(file, latest) {
+    const n = file?.days?.length || 0, cols = (file?.provinces || []).map(([name, c]) => [name, Object.entries(c).map(([k, runs]) => [k, runsToArray(runs, n)])]);
+    return (file?.days || []).map((d, i) => {
+      const items = [];
+      for (const [name, c] of cols) {
+        if (c.every(([, vals]) => vals[i] === null)) continue; // provincia assente quel giorno
+        items.push({...(latest.get(name) || {}), name, ...Object.fromEntries(c.map(([k, vals]) => [k, vals[i]]))});
+      }
+      const [y, m, g] = d.split('-');
+      return {date: g + '/' + m + '/' + y + ' · giornaliera', fetchedAt: null, scoresSynced: true, daily: true, day: d, items};
+    }).filter(s => s.items.length);
+  }
+  async function daily(recent) {
+    const list = (await readStato()).storico || [], current = new Date().toISOString().slice(0, 7);
+    const files = await Promise.all(list.filter(p => /^dati\/storico\/\d{4}-\d{2}\.json$/.test(p)).map(p => get(p, !p.includes(current)).catch(() => null)));
+    const latest = new Map((recent.at(-1)?.items || []).map(p => [p.name, p]));
+    // Il giorno delle fotografie recenti è già coperto da quelle: non si ripete.
+    const today = recent[0]?.fetchedAt ? new Date(recent[0].fetchedAt).toLocaleDateString('sv-SE', {timeZone: 'Europe/Rome'}) : null;
+    return files.filter(Boolean).flatMap(f => expand(f, latest)).filter(s => s.day !== today).sort((a, b) => a.day.localeCompare(b.day));
+  }
   // Gettito condiviso: un foglio per Stato, solo degli Stati di chi ha scelto di condividerlo.
   let fiscal = null;
   const readFiscal = () => (fiscal ||= get('dati/gettito/indice.json').then(list => Promise.all(list.filter(f => /^dati\/gettito\/[0-9A-Za-z-]+\.json$/.test(f)).map(f => get(f).catch(() => null)))).then(files => files.filter(Boolean).flatMap(f => f.rows || [])).catch(() => []));
@@ -29,14 +52,17 @@
     const s = await readStato();
     if (!s.market) return null;
     const series = {}, current = new Date().toISOString().slice(0, 7);
-    const months = await Promise.all((s.market.months || []).map(m => get(m, !m.includes(current)).catch(() => ({}))));
+    // Si scaricano solo i mesi dell'ultimo anno (13 mesi): bastano per la vista «1 anno» anche dopo anni di storico.
+    const first = new Date(); first.setUTCDate(1); first.setUTCMonth(first.getUTCMonth() - 12);
+    const from = first.toISOString().slice(0, 7), recentMonths = (s.market.months || []).filter(m => (m.match(/(\d{4}-\d{2})\.json$/)?.[1] || '') >= from);
+    const months = await Promise.all(recentMonths.map(m => get(m, !m.includes(current)).catch(() => ({}))));
     for (const month of months) for (const [k, pts] of Object.entries(month || {})) if (Array.isArray(pts)) (series[k] ??= []).push(...pts);
     return {series, depth: s.market.depth, bucketHours: s.market.bucketHours, checkedAt: s.market.checkedAt};
   }
   async function api(path) {
     try {
       if (path === '/api/snapshot') { const s = await readStato(); return json({schema: 1, history: await snapshots(1), checkedAt: s.status?.checkedAt || null}); }
-      if (path === '/api/status') { const s = await readStato(), rows = await readFiscal(); return json({status: s.status, fiscal: rows.length ? {ok: true, regions: new Set(rows.map(r => r.name)).size, days: new Set(rows.map(r => r.day)).size} : null, countryId: null, intervalMinutes: 30, rates: 0, stateRates: null, provinceRates: null, rateNames: null, ratesShape: null, market: s.market?.status || null}); }
+      if (path === '/api/status') { const s = await readStato(), rows = await readFiscal(); return json({status: s.status, fiscal: rows.length ? {ok: true, regions: new Set(rows.map(r => r.name)).size, days: new Set(rows.map(r => r.day)).size} : null, countryId: null, intervalMinutes: 5, rates: 0, stateRates: null, provinceRates: null, rateNames: null, ratesShape: null, market: s.market?.status || null}); }
       if (path === '/api/market') { const m = await market(); return m ? json(m) : json({error: 'Mercato non ancora pubblicato'}, 503); }
       if (path === '/api/public-world') return json(await get('dati/mondo.json'));
       return json({error: 'Percorso non disponibile'}, 404);
@@ -47,7 +73,7 @@
     return url.startsWith('/api/') ? api(url.split('?')[0]) : original(input, options);
   };
   async function message(m) {
-    if (m?.action === 'state') { const history = await snapshots(), rows = await readFiscal(); if (history.length) history.at(-1).fiscal = rows; return {ok: true, state: {history}}; }
+    if (m?.action === 'state') { const recent = await snapshots(), history = [...await daily(recent).catch(() => []), ...recent], rows = await readFiscal(); if (history.length) history.at(-1).fiscal = rows; return {ok: true, state: {history}}; }
     if (m?.action === 'province') { const inc = income(await readFiscal(), String(m.name || '')); return {ok: true, income: inc, detail: null, detailError: 'nel sito cassa e scorte si inseriscono a mano', incomeError: inc ? null : 'il gettito di questa provincia non è condiviso nel sito'}; }
     if (m?.action === 'history') return {ok: false, error: 'Il sito è in sola lettura: lo storico si importa solo nell’estensione.'};
     return {ok: false, error: 'Non disponibile nel sito'};

@@ -3,7 +3,7 @@
 (() => {
   const $ = id => document.getElementById(id);
   const NAMES = {altin: 'Oro', deri: 'Pelle', petrol: 'Petrolio', nte: 'NTE', elmas: 'Diamanti', para: 'Denaro'};
-  const RANGES = [['1', '24 ore'], ['7', '7 giorni'], ['30', '30 giorni'], ['90', '90 giorni'], ['all', 'Tutto']];
+  const RANGES = [['1', '24 ore'], ['7', '7 giorni'], ['30', '30 giorni'], ['90', '90 giorni'], ['365', '1 anno'], ['all', 'Tutto']];
   const nf = (n, d = 2) => n === null || n === undefined || !Number.isFinite(n) ? '—' : n.toLocaleString('it-IT', {maximumFractionDigits: d});
   const big = n => !Number.isFinite(n) ? '—' : Math.abs(n) >= 1e6 ? nf(n / 1e6, 2) + ' mln' : Math.abs(n) >= 1e4 ? nf(n / 1e3, 1) + ' mila' : nf(n, 0);
   const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
@@ -88,6 +88,7 @@
   function render() {
     for (const b of document.querySelectorAll('#m-resources button')) b.setAttribute('aria-pressed', b.dataset.r === resource);
     for (const b of document.querySelectorAll('#m-ranges button')) b.setAttribute('aria-pressed', b.dataset.r === range);
+    if (!data?.series) return; // mercato non ancora caricato: si aggiorna solo il pulsante scelto
     const v = view(), o = {byDay: v.byDay, hint: 'Passa sul grafico per leggere i valori.'}, per = v.byDay ? ' al giorno' : ' all’ora';
     tiles(v);
     chart($('m-price'), v.rows, [{key: 'price', name: 'Offerta', cls: 's1'}, {key: 'vwap', name: 'Vendite', cls: 's2'}, {key: 'low', name: 'Offerta minima', cls: 's3'}], {...o, label: 'Prezzi', height: 240});

@@ -103,7 +103,7 @@ function renderHistory(){
   const from=oldFrom===''?Math.max(0,history.length-2):Number(oldFrom),to=oldTo===''?history.length-1:Number(oldTo);
   $('fromSnapshot').value=String(Math.max(0,Math.min(history.length-1,from)));
   $('toSnapshot').value=String(Math.max(0,Math.min(history.length-1,to)));
-  $('snapshots').replaceChildren(...history.map((h,i)=>stat('#'+(i+1)+' '+h.date,h.items.length+' province'+(h.scoresSynced?'':' · indici non aggiornati'))));compareHistory();
+  const shown=Math.max(0,history.length-10);$('snapshots').replaceChildren(...history.slice(shown).map((h,j)=>stat('#'+(shown+j+1)+' '+h.date,h.items.length+' province'+(h.scoresSynced?'':' · indici non aggiornati'))));compareHistory();
 }
 function compareHistory(){
   const a=history[+$('fromSnapshot').value],b=history[+$('toSnapshot').value];if(!a||!b)return;
