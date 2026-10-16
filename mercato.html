@@ -1,0 +1,13 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Mercato · Diplomacia</title><link rel="stylesheet" href="unified.css"><link rel="stylesheet" href="mercato.css"></head><body>
+<nav class="unified-nav" aria-label="Sezioni Diplomacia"><a href="index.html">Panoramica</a><a href="province.html">Province</a><a href="fabbriche.html">Fabbriche</a><a href="bilancio.html">Bilancio provinciale</a><a href="mercato.html" aria-current="page">Mercato</a></nav>
+<main><header><p class="eyebrow">Mercato</p><h1>Prezzi e scambi nel tempo</h1><p class="m-status" id="m-status" aria-live="polite">Carico lo storico…</p></header>
+<section id="m-empty" class="m-panel" hidden><p id="m-empty-text"></p><p class="m-note">Lo storico si raccoglie da solo ogni mezz’ora con il gioco aperto in Firefox, e va oltre la settimana mostrata nel gioco.</p></section>
+<div id="m-main" hidden>
+<div class="m-controls"><div class="m-chips" id="m-resources" aria-label="Risorsa"></div><div class="m-chips" id="m-ranges" aria-label="Periodo"></div></div>
+<div class="m-tiles" id="m-tiles"></div>
+<section class="m-panel"><h2>Prezzi</h2><div id="m-price"></div></section>
+<div class="m-grid"><section class="m-panel"><h2>Quantità scambiata</h2><div id="m-volume"></div></section><section class="m-panel"><h2>Numero di scambi</h2><div id="m-trades"></div></section></div>
+<section class="m-panel"><h2>Valore scambiato</h2><div id="m-value"></div></section>
+<section class="m-panel" id="m-table-wrap"><div class="m-head"><h2>Giorno per giorno</h2><button type="button" id="m-csv">Esporta CSV</button></div><div class="m-scroll"><table class="sortable-table"><thead><tr><th>Giorno</th><th>Offerta</th><th>Vendite</th><th>Minimo</th><th>Scambi</th><th>Quantità</th><th>Valore</th></tr></thead><tbody id="m-rows"></tbody></table></div></section>
+<p class="m-note">Offerta: media delle offerte più economiche. Vendite: prezzo medio delle vendite, ponderato sulle quantità. Valore = prezzo delle vendite × quantità.</p>
+</div></main><script src="sito.js"></script><script src="mercato.js"></script><script src="sort-table.js"></script></body></html>
