@@ -24,6 +24,7 @@ h2{font-size:1rem;margin:0 0 10px;letter-spacing:-.01em}
 .m-axis{fill:#7f93a1;font-size:13px;font-family:var(--dip-font)}
 .m-line{fill:none;stroke-width:2.2;stroke-linejoin:round;stroke-linecap:round}
 .m-line.s1{stroke:var(--dip-accent)}.m-line.s2{stroke:var(--dip-gold)}.m-line.s3{stroke:#6fa8dc;stroke-dasharray:5 5;stroke-width:1.6}
+.m-peak.s1{fill:var(--dip-accent)}.m-peak.s2{fill:var(--dip-gold)}.m-peak.s3{fill:#6fa8dc}
 .m-bar.s1{fill:#90e7c1b3}.m-bar.s2{fill:#e6bd80b3}.m-bar.s4{fill:#6fa8dcb3}
 .m-cursor{stroke:#ffffff55;stroke-width:1}
 .m-legend{display:flex;gap:14px;flex-wrap:wrap;margin-bottom:6px;font-size:.78rem;color:var(--dip-soft)}

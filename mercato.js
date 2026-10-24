@@ -43,13 +43,23 @@
     const vals = rows.flatMap(r => series.map(s => r[s.key])).filter(v => v !== null && Number.isFinite(v));
     if (!vals.length) { host.append(el('p', 'm-empty', 'Nessun dato in questo periodo.')); return; }
     let min = opts.zero ? 0 : Math.min(...vals), max = Math.max(...vals);
+    // Picchi: un'offerta isolata a 1 o a 10 volte il prezzo schiacciava tutte le linee. Sulle linee la scala segue i valori
+    // tra i quartili ± 3 volte la loro distanza; i punti fuori restano sul bordo con un triangolo e il valore vero al passaggio.
+    let clipped = 0;
+    if (!opts.zero && vals.length >= 8) {
+      const so = [...vals].sort((a, b) => a - b), q = p => so[Math.floor(p * (so.length - 1))];
+      const q1 = q(0.25), q3 = q(0.75), gap = Math.max(q3 - q1, Math.abs(q(0.5)) * 0.05), lo = q1 - 3 * gap, hi = q3 + 3 * gap;
+      const inside = vals.filter(v => v >= lo && v <= hi);
+      clipped = vals.length - inside.length;
+      if (clipped && inside.length) { min = Math.min(...inside); max = Math.max(...inside); }
+    }
     if (max === min) { max = max * 1.05 || 1; min = opts.zero ? 0 : min * 0.95; }
     if (!opts.zero) { const pad = (max - min) * 0.1; min -= pad; max += pad; }
     // Asse x sul tempo vero (non sull'indice del punto): i buchi e i blocchi di durata diversa si vedono come sono.
     const times = rows.map(r => Date.parse(r.t)), t0 = times[0], t1 = times.at(-1), span = t1 - t0;
     const xt = t => L + (span ? (t - t0) / span * (W - L - R) : (W - L - R) / 2);
     const x = i => xt(times[i]);
-    const y = v => T + (1 - (v - min) / (max - min)) * (H - T - B);
+    const y = v => T + (1 - (Math.min(max, Math.max(min, v)) - min) / (max - min)) * (H - T - B); // fuori scala: sul bordo
     const s = svg('svg', {viewBox: `0 0 ${W} ${H}`, class: 'm-chart', role: 'img', 'aria-label': opts.label});
     for (const f of [0, 0.5, 1]) { const v = min + (max - min) * f, yy = y(v); s.append(svg('line', {x1: L, x2: W - R, y1: yy, y2: yy, class: 'm-gridline'})); const t = svg('text', {x: L - 8, y: yy + 4, class: 'm-axis', 'text-anchor': 'end'}); t.textContent = big(v); s.append(t); }
     const ticks = Math.min(6, rows.length);
@@ -58,14 +68,21 @@
     const bw = r => Math.max(1.5, span ? (r.hours || 24) * 3600000 / span * (W - L - R) * 0.85 : (W - L - R) * 0.1);
     for (const se of series) {
       if (se.type === 'bar') rows.forEach((r, i) => { const v = r[se.key]; if (v > 0) s.append(svg('rect', {x: opts.byDay ? x(i) - bw(r) / 2 : x(i) - bw(r), y: y(v), width: bw(r), height: Math.max(0.5, y(min) - y(v)), class: 'm-bar ' + se.cls})); });
-      else { let d = ''; rows.forEach((r, i) => { const v = r[se.key]; if (v === null || !Number.isFinite(v)) return; d += (d && rows[i - 1]?.[se.key] != null ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }); if (d) s.append(svg('path', {d, class: 'm-line ' + se.cls})); }
+      else { // la linea si interrompe sui picchi tagliati: resta solo il triangolo sul bordo
+        const ok = v => v !== null && v !== undefined && Number.isFinite(v) && v <= max && v >= min;
+        let d = ''; rows.forEach((r, i) => { const v = r[se.key]; if (!ok(v)) return; d += (d && ok(rows[i - 1]?.[se.key]) ? 'L' : 'M') + x(i).toFixed(1) + ' ' + y(v).toFixed(1); }); if (d) s.append(svg('path', {d, class: 'm-line ' + se.cls}));
+        // triangolo sul bordo dove un picco è stato tagliato (in su o in giù)
+        rows.forEach((r, i) => { const v = r[se.key]; if (v === null || !Number.isFinite(v) || (v <= max && v >= min)) return;
+          const up = v > max, yy = up ? T : H - B, xx = x(i);
+          s.append(svg('path', {d: up ? `M${xx - 5} ${yy + 8}L${xx} ${yy}L${xx + 5} ${yy + 8}Z` : `M${xx - 5} ${yy - 8}L${xx} ${yy}L${xx + 5} ${yy - 8}Z`, class: 'm-peak ' + se.cls})); }); }
     }
     const cursor = svg('line', {y1: T, y2: H - B, class: 'm-cursor', visibility: 'hidden'}); s.append(cursor);
     const hit = svg('rect', {x: L, y: 0, width: W - L - R, height: H, fill: 'transparent'}); s.append(hit);
-    const info = el('p', 'm-info', opts.hint);
+    const hint = clipped ? opts.hint + ` ${clipped === 1 ? '1 picco tagliato' : clipped + ' picchi tagliati'} (▲▼ sul bordo): il valore vero si legge passando sopra.` : opts.hint;
+    const info = el('p', 'm-info', hint);
     const show = i => { const r = rows[i]; cursor.setAttribute('x1', x(i)); cursor.setAttribute('x2', x(i)); cursor.setAttribute('visibility', 'visible'); info.textContent = (opts.byDay ? new Date(r.t).toLocaleDateString('it-IT', {weekday: 'short', day: 'numeric', month: 'short'}) : new Date(r.t).toLocaleString('it-IT', {weekday: 'short', day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit'})) + ' · ' + series.map(se => se.name + ' ' + nf(r[se.key])).join(' · '); };
     hit.addEventListener('pointermove', e => { const b = s.getBoundingClientRect(), px = (e.clientX - b.left) / b.width * W, t = t0 + (px - L) / (W - L - R) * span; let best = 0; for (let i = 1; i < times.length; i++) if (Math.abs(times[i] - t) < Math.abs(times[best] - t)) best = i; show(best); });
-    hit.addEventListener('pointerleave', () => { cursor.setAttribute('visibility', 'hidden'); info.textContent = opts.hint; });
+    hit.addEventListener('pointerleave', () => { cursor.setAttribute('visibility', 'hidden'); info.textContent = hint; });
     const legend = el('div', 'm-legend'); for (const se of series) { const k = el('span', 'm-key ' + se.cls, se.name); legend.append(k); }
     host.append(legend, s, info);
   }
