@@ -1,0 +1,15 @@
+<!doctype html><html lang="it"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Persone in numeri · Diplomacia</title><link rel="stylesheet" href="unified.css"><link rel="stylesheet" href="persone.css"></head><body>
+<nav class="unified-nav" aria-label="Sezioni Diplomacia"><a href="index.html">Panoramica</a><a href="province.html">Province</a><a href="fabbriche.html">Fabbriche</a><a href="bilancio.html">Bilancio provinciale</a><a href="mercato.html">Mercato</a><a href="persone-numeri.html" aria-current="page">Persone</a></nav>
+<main><header><p class="eyebrow">Persone</p><h1>Cittadini e partiti in numeri</h1><p class="p-status" id="p-status" aria-live="polite">Carico i dati…</p></header>
+<section class="p-panel a-box" aria-live="polite"><h2>Nuovi iscritti</h2><div id="p-new"><p class="p-note">Carico…</p></div></section>
+<section id="p-empty" class="p-panel" hidden><p id="p-empty-text"></p></section>
+<div id="p-main" hidden>
+<div class="p-tiles" id="p-tiles"></div>
+<section class="p-panel"><h2>Attivi per giorni dall'ultimo accesso</h2><div class="p-bars" id="p-bars"></div></section>
+<section class="p-panel"><div class="p-head"><h2>Partiti</h2><span class="p-count" id="p-party-note"></span></div>
+<div class="p-scroll"><table class="p-table"><thead><tr><th>Partito</th><th class="num">Iscritti</th><th class="num">Attivi 7 g</th><th class="num">Quota attivi</th><th class="num">Rispetto a ieri</th><th class="num">Rispetto a 7 giorni fa</th></tr></thead><tbody id="p-parties"></tbody></table></div>
+<p class="p-note">Attivi: iscritti con un accesso negli ultimi 7 giorni. Quota: parte degli attivi del Paese. Variazioni degli attivi (tra parentesi gli iscritti) rispetto all'ultima lettura di quel giorno.</p></section>
+<section class="p-panel"><h2>Attivi per partito, giorno per giorno</h2><div class="p-chart-wrap" id="p-chart"></div><ul class="p-series" id="p-series"></ul></section>
+<section class="p-panel"><div class="p-head"><h2 id="p-arrivals-title">Nuovi arrivi in Italia</h2><span class="p-count" id="p-arrivals-note"></span></div><div class="p-scroll"><table class="p-table"><thead><tr><th>Giorno</th><th class="num">Nuovi arrivi</th></tr></thead><tbody id="p-arrivals"></tbody></table></div></section>
+<p class="p-note">Solo numeri complessivi: nessun nome né dato dei singoli giocatori.</p>
+</div></main><script src="sito.js"></script><script src="arrivi.js"></script><script src="persone-numeri.js"></script></body></html>
