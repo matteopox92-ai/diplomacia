@@ -1,0 +1,22 @@
+/* Tema comune Diplomacia: palette verde/menta/oro del simulatore Province (v9). Solo aspetto, nessuna logica. */
+:root{--dip-bg:#0a121a;--dip-panel:#121f29;--dip-panel-2:#0e1b24;--dip-field:#0b1620;--dip-line:#293c48;--dip-line-2:#36515c;--dip-text:#eef4f6;--dip-soft:#a9bac7;--dip-accent:#90e7c1;--dip-accent-ink:#06231a;--dip-gold:#e6bd80;--dip-danger:#ffa59d;--dip-font:"Segoe UI Variable Text","Segoe UI",Inter,system-ui,-apple-system,sans-serif;--dip-glow:radial-gradient(ellipse 70vw 520px at 100% 0,#21493e4d,transparent 70%),radial-gradient(ellipse 50vw 420px at 0 0,#14324a40,transparent 70%);color-scheme:dark}
+/* Ogni foglio di pagina, caricato dopo questo, applica lo sfondo con: background:var(--dip-glow) no-repeat var(--dip-bg) */
+html{scrollbar-color:#2e4652 var(--dip-bg);scroll-padding-top:72px}
+body{font-family:var(--dip-font);-webkit-font-smoothing:antialiased}
+::selection{background:#90e7c155;color:#fff}
+
+/* Navigazione: marchio a sinistra, sezioni a destra, fissa in alto */
+.unified-nav{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:4px;flex-wrap:wrap;padding:10px max(18px,calc((100vw - 1384px)/2));background:#0a121ad9;-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);border-bottom:1px solid var(--dip-line)}
+.unified-nav::before{content:"◆ Diplomacia";margin-right:auto;padding-right:16px;color:var(--dip-text);font:750 .95rem/1 var(--dip-font);letter-spacing:-.01em}
+.unified-nav a{display:inline-flex;align-items:center;min-height:38px;padding:8px 13px;border:0;border-radius:8px;background:transparent;color:var(--dip-soft);text-decoration:none;font:600 .9rem var(--dip-font)}
+.unified-nav a:hover{background:#1c2e38;color:#fff}
+.unified-nav a:focus-visible{outline:2px solid var(--dip-accent);outline-offset:2px}
+.unified-nav a[aria-current="page"]{background:#90e7c114;color:var(--dip-accent);box-shadow:inset 0 -2px var(--dip-accent)}
+
+/* Collegamento al raccoglitore Firefox in fondo alle pagine */
+a[href="/connect.html"]{display:inline-flex;align-items:center;gap:8px;margin:0 0 34px;padding:10px 16px;border:1px solid var(--dip-line-2);border-radius:999px;color:var(--dip-soft);text-decoration:none;font-size:.85rem}
+a[href="/connect.html"]::before{content:"🦊"}
+a[href="/connect.html"]:hover{color:var(--dip-accent);border-color:#4c736c}
+
+@media(max-width:600px){html{scroll-padding-top:0}.unified-nav{position:relative;padding:8px 10px;gap:2px}.unified-nav::before{width:100%;margin:2px 0 6px;padding:0 4px}.unified-nav a{padding:7px 9px;font-size:.82rem;min-height:36px}}
+@media(prefers-reduced-motion:no-preference){.unified-nav a,a[href="/connect.html"]{transition:background .16s,color .16s,border-color .16s}}
