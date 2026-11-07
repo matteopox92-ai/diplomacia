@@ -1,0 +1,58 @@
+/* Fabbriche nel tema comune (verde/menta/oro). Caricato dopo lo stile originale v2.0: cambia solo l'aspetto, non ID, formule o script. */
+body{background:var(--dip-glow) no-repeat var(--dip-bg);color:var(--dip-text);line-height:1.55}
+/* Razionalizzazione 4.0: via taratura manuale, verifiche salvate e testi esplicativi (restano campi e risultati). */
+#productionRemainder,body:has(#productionScreen:target) #productionRemainder{display:none!important}
+#productionScreen .card>.muted,#growthScreen .muted:not(#simNotes),#growthScreen .simple-note,#simXpWarning{display:none}
+header{background:transparent;border:0;padding:40px max(24px,calc((100vw - 1000px)/2)) 10px}
+header .eyebrow{color:var(--dip-accent);font-size:.7rem;font-weight:750;letter-spacing:.16em;text-transform:uppercase;margin:0 0 12px}
+header h1{font-size:clamp(2.1rem,4.6vw,3.5rem);letter-spacing:-.055em;line-height:1.08;font-weight:750}
+header p{font-size:1rem;line-height:1.65;color:var(--dip-soft);max-width:600px;margin:14px 0 0}
+p{color:#c8d6dc}
+main{max-width:1000px;padding:20px 24px 40px;gap:18px}
+.card{background:var(--dip-panel);border-color:var(--dip-line);border-radius:18px;padding:24px;box-shadow:0 12px 35px #0000001f}
+h2{letter-spacing:-.02em;font-size:1.15rem}
+h3,.subheading{font-size:.95rem;color:#dfedf0;margin:18px 0 12px}
+label{color:#c1d0d7;font-size:.82rem;font-weight:550}
+input,select{background:var(--dip-field);border-color:var(--dip-line-2);min-height:44px;color:var(--dip-text)}
+input:hover,select:hover{border-color:#4a6774}
+input:focus-visible,select:focus-visible,button:focus-visible,a:focus-visible,summary:focus-visible{outline:2px solid var(--dip-accent);outline-offset:2px}
+input[type=checkbox]{accent-color:var(--dip-accent);min-height:0}
+.check{color:#c1d0d7}
+.stat{background:var(--dip-panel-2);border:1px solid #2c414b;border-radius:13px}
+.stat small{color:var(--dip-soft)}
+.stat strong{color:var(--dip-accent);letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.good{color:var(--dip-accent)}.bad{color:var(--dip-danger)}.bad:empty{display:none}
+.muted{color:var(--dip-soft)}
+table{font-variant-numeric:tabular-nums;font-size:.88rem}
+td{border-color:#243842}
+tr:last-child td{border-bottom:0}
+button{background:#285c4d;border:1px solid #3d675d;font-weight:600;color:#fff}
+button:hover{background:#317060}
+.province-development input[readonly]{color:var(--dip-accent);background:#10251f;border-color:#315348}
+.notice{background:#332a1d;border-color:#6b583b;color:#e7c99e;font-size:.85rem;line-height:1.6}
+
+/* Menu iniziale */
+.home-buttons{gap:14px}
+.home-button{position:relative;min-height:150px;border:1px solid var(--dip-line);border-radius:16px;background:linear-gradient(160deg,#162a33,var(--dip-panel-2) 60%);color:var(--dip-text);overflow:hidden}
+.home-button::after{content:"Apri →";position:absolute;right:20px;bottom:18px;color:var(--dip-accent);font-size:.85rem;font-weight:650}
+.home-button:hover,.home-button:focus-visible{filter:none;border-color:#4c736c}
+.home-button b{font-size:1.15rem;letter-spacing:-.02em}
+.home-button span{color:var(--dip-soft);font-size:.92rem;display:block;padding-right:56px}
+.back{background:transparent;border:1px solid var(--dip-line-2);border-radius:999px;padding:8px 14px;color:var(--dip-soft);font-size:.85rem}
+.back:hover{filter:none;color:var(--dip-accent);border-color:#4c736c}
+.screen-title{font-size:1.5rem;letter-spacing:-.03em;margin:14px 0 14px}
+#productionScreen>.card+.card{margin-top:16px}
+
+/* Pannelli espandibili */
+details.fold{border-color:var(--dip-line);background:var(--dip-panel-2)}
+details.fold>summary{color:#dfedf0;font-weight:600;font-size:.92rem}
+details.fold>summary:hover{background:#13232c}
+details.fold>summary:after{color:var(--dip-accent)}
+details.fold[open]>summary{border-color:var(--dip-line)}
+#growthScreen .card .card{background:var(--dip-panel-2);border-color:var(--dip-line)!important}
+#growthScreen .primary-stats .stat:first-child{border-color:#3a6656;background:linear-gradient(125deg,#173c32,#152b2c)}
+#growthScreen .simple-note{color:var(--dip-soft)}
+#productionRemainder>details.fold{margin-top:0}
+
+@media(max-width:600px){header{padding:28px 16px 4px}main{padding:14px 12px 30px}.card{padding:16px}.home-button span{padding-right:0;padding-bottom:22px}}
+@media(prefers-reduced-motion:no-preference){.home-button,.back,button,input,select,details.fold>summary{transition:background .16s,border-color .16s,color .16s}}

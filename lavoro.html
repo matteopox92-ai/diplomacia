@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+<html lang="it"><head><meta charset="utf-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/><meta name="theme-color" content="#111827"/><title>Resa e lavoro · Diplomacia Calcolatori</title><meta name="description" content="Resa delle fabbriche, metodo di lavoro in diamanti e risorse, orario settimanale e spiegazione dei conti."><meta property="og:type" content="website"><meta property="og:title" content="Resa e lavoro · Diplomacia Calcolatori"><meta property="og:description" content="Resa delle fabbriche, lavoro in diamanti e risorse, orario settimanale. Tutti i conti spiegati."><meta property="og:url" content="https://matteopox92-ai.github.io/diplomacia/lavoro.html"><meta name="robots" content="index,follow"><style>
+:root{font-family:system-ui,-apple-system,sans-serif;color-scheme:dark}*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#eef2ff;line-height:1.4}
+header{background:#111c31;padding:20px 18px;border-bottom:1px solid #29364d}h1{font-size:1.45rem;margin:0}header p{margin:6px 0 0;color:#aebbd0}
+.tabs{display:flex;gap:10px;max-width:900px;margin:16px auto 0;padding:0 16px}.tab{flex:1;min-width:0;text-align:center;text-decoration:none;color:#eef2ff;background:#1c3153;border:1px solid #46618b;border-radius:14px;padding:14px 10px;font-weight:700}.tab.on{background:#346be6;border-color:#6f97ff}
+main{max-width:900px;margin:auto;padding:16px}.page{display:none;gap:14px}.tabs{flex-wrap:wrap}.tab{flex-basis:30%}.page.on{display:grid}
+.card{background:#142138;border:1px solid #2c3e58;border-radius:16px;padding:18px}
+.card h2{font-size:1.1rem;margin:0 0 4px;display:flex;align-items:center;gap:10px}.card .hint{margin:0 0 14px;color:#9fb1cb;font-size:.88rem}
+.n{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;border-radius:50%;background:#346be6;font-size:.9rem;flex:none}
+.fields{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px}label{display:flex;flex-direction:column;gap:6px;color:#b8c5d8;font-size:.86rem}
+label small{color:#8396b2;font-size:.76rem}
+input,select{width:100%;border:1px solid #40516c;border-radius:10px;background:#0b1628;color:#fff;padding:11px;font:inherit}input[readonly]{color:#73e2b6;background:#10273a;font-weight:700}input[type=checkbox]{width:auto;transform:scale(1.25)}
+.check{display:flex;align-items:center;gap:12px;margin-top:14px;color:#d3def0;font-size:.92rem}
+.result{border-color:#3e8c79;background:#122a2f}.hero{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px}
+.stat{background:#0b1628;padding:14px;border-radius:12px}.stat small{color:#aebbd0}.stat strong{display:block;font-size:1.55rem;margin-top:4px;color:#73e2b6;overflow-wrap:anywhere}
+.big{font-size:1.05rem;color:#eaf3ff;margin:0 0 14px}.big b{color:#73e2b6}
+.warn{padding:12px;border:1px solid #7d6840;border-radius:10px;background:#332d1f;color:#f4dfb2;font-size:.88rem;margin-top:12px}.warn[hidden]{display:none}
+table{width:100%;border-collapse:collapse}td,th{padding:10px 6px;border-bottom:1px solid #2b3b53;text-align:right;font-variant-numeric:tabular-nums}td:first-child,th:first-child{text-align:left}th{color:#9fb4d4;font-size:.8rem;font-weight:600}tr.diff td{background:#0f2b2a;font-weight:700}
+table.plan td{text-align:left;vertical-align:top}table.plan td:first-child{white-space:nowrap;font-weight:700;color:#cfe0ff;width:1%}
+.prop{background:#0f1d33;border:1px solid #3a557c;border-radius:14px;padding:16px;margin-top:14px}.prop h3{margin:0 0 4px;font-size:1.02rem;color:#cfe0ff}.prop p{margin:0 0 10px;color:#a9bbd6;font-size:.88rem}
+.tag{display:inline-block;background:#1c3153;border:1px solid #46618b;border-radius:999px;padding:3px 10px;font-size:.78rem;margin:2px 4px 2px 0;color:#d3def0}
+.scroll{overflow:auto}ol.steps{margin:0 0 6px;padding-left:20px;color:#d3def0;font-size:.92rem}ol.steps li{margin-bottom:8px}h3.sub{font-size:.98rem;margin:16px 0 8px;color:#cfe0ff}details{margin-top:12px;border:1px solid #395273;border-radius:12px;background:#101d32}summary{padding:13px 15px;cursor:pointer;font-weight:600;color:#dbe8ff}details>div{padding:0 15px 15px}
+.muted{font-size:.82rem;color:#9aabc3}details ul{margin:8px 0 0;padding-left:18px;color:#c3d0e6;font-size:.88rem}details li{margin-bottom:6px}
+@media(max-width:520px){.tab{flex-basis:100%}main{padding:12px}.card{padding:14px}.stat strong{font-size:1.3rem}th,td{padding:8px 4px;font-size:.85rem}}
+</style></head><body><div style="background:#0b1220;border-bottom:1px solid #29364d;padding:10px max(16px,env(safe-area-inset-left,0px))"><a href="index.html" style="color:#9fc0ff;text-decoration:none;font-size:.92rem;font-weight:600">← Diplomacia Calcolatori · Panoramica, Province, Fabbriche, Bilancio, Mercato</a></div>
+<header><h1>⚙️ Diplomacia · Calcolatore</h1><p>Resa delle fabbriche e metodo di lavoro con i diamanti. I dati restano nel tuo browser.</p></header>
+<nav class="tabs"><a class="tab" id="tabResa" href="#resa">🏭 Resa fabbrica</a><a class="tab" id="tabMetodo" href="#metodo">💎 Metodo di lavoro</a><a class="tab" id="tabConti" href="#conti">📘 Come sono fatti i conti</a></nav>
+<main>
+
+<!-- ============ PAGINA 1: RESA FABBRICA ============ -->
+<div class="page" id="pageResa">
+<section class="card"><h2><span class="n">1</span>La fabbrica</h2><p class="hint">Quale fabbrica e quali bonus ha la sua provincia.</p>
+<div class="fields">
+<label>Risorsa<select id="resource"><option value="gold">🪙 Oro</option><option value="leather">🧥 Pelli</option><option value="oil">🛢️ Petrolio</option><option value="nte">⚗️ NTE</option><option value="diamonds">💎 Diamanti</option></select></label>
+<label>Livello della fabbrica<input id="factory" min="1" type="number" value="100"/></label>
+<label>Bonus provincia (%)<input id="province" step="0.1" type="number" value="7"/></label>
+<label>Sviluppo provincia (0–10, 11 = «10+»)<input id="development" max="11" min="0" type="number" value="8"/></label>
+<label>Bonus sviluppo<input id="developmentBonus" readonly type="text"/></label>
+<label>Tassa del Paese (%)<input id="tax" step="0.1" type="number" value="7"/></label>
+<label>Tassa della Provincia (%)<input id="taxP" step="0.1" type="number" value="0"/></label>
+<label>Editto (%)<input id="edict" step="0.1" type="number" value="3"/></label>
+</div></section>
+<section class="card"><h2><span class="n">2</span>Il giocatore</h2><p class="hint">Chi lavora nella fabbrica.</p>
+<div class="fields">
+<label>Livello giocatore<input id="player" min="1" type="number" value="68"/></label>
+<label>Livello scienziato<input id="scientist" min="0" type="number" value="151"/></label>
+<label>Esperto fiscale (%)<input id="expert" max="100" min="0" step="0.1" type="number" value="15"/></label>
+<label>Salario del lavoratore (%)<input id="salary" max="100" min="1" type="number" value="100"/></label>
+</div>
+<div class="check"><input checked id="scribes" type="checkbox"/><label for="scribes" style="flex-direction:row">Classe burocrate (bonus Scribi)</label></div></section>
+<section class="card"><h2><span class="n">3</span>Valore di mercato</h2><p class="hint">Il prezzo lo scrivi tu: serve per sapere a quanti soldi corrisponde la produzione.</p>
+<div class="fields"><label><span id="priceRLabel">Prezzo di 1 unità</span><input id="priceR" min="0" step="0.01" type="number" placeholder="es. 150"/></label></div>
+<p class="muted" id="priceRNote" style="margin:10px 0 0"></p></section>
+<section class="card result"><h2>Risultato</h2><p class="hint">Quanto produce un turno di lavoro.</p>
+<div class="hero"><div class="stat"><small>Produzione totale per turno</small><strong id="total">—</strong></div><div class="stat"><small>Quota del lavoratore</small><strong id="worker">—</strong></div><div class="stat"><small>Produzione base</small><strong id="base">—</strong></div></div>
+<div class="hero" style="margin-top:12px"><div class="stat"><small>Valore del turno in denaro</small><strong id="valTotal">—</strong></div><div class="stat"><small>Valore della quota del lavoratore</small><strong id="valWorker">—</strong></div></div>
+<details><summary>Mostra i passaggi del calcolo</summary><div><table><tbody id="steps"></tbody></table>
+<p class="muted">Formula verificata riga per riga su 4 schermate reali di fabbriche di pelle (livelli 45, 85, 100, 128). Ogni riga viene troncata, le due tasse si applicano una dopo l'altra e l'esperto fiscale riduce ciascuna. Sviluppo: +3% per livello per i diamanti, +2% per le altre risorse. Il bonus provincia mostrato dal gioco è arrotondato: possibile scarto di 1–3 unità. Non affiliato a Diplomacia.</p></div></details>
+</section>
+</div>
+
+<!-- ============ PAGINA 2: METODO DI LAVORO ============ -->
+<div class="page" id="pageMetodo">
+<section class="card"><h2>💎 Metodo di lavoro</h2>
+<p class="hint" style="margin:0">Lavorando in <b>diamanti</b> ogni turno produce denaro e diamanti, e ne costa meno di quanti ne dà: ne avanzano. Lavorando in <b>risorse</b> i diamanti si perdono. Con i diamanti avanzati (più le missioni e quelli che compri) puoi fare alcuni turni in risorse, che di solito rendono di più. Qui calcoli quanti turni e quanto guadagni in un mese, e ottieni due proposte di orari per la settimana.</p></section>
+
+<section class="card"><h2><span class="n">1</span>Il tuo personaggio</h2><p class="hint">I valori del tuo account, uguali per tutte e due le fabbriche.</p>
+<div class="fields">
+<label>Livello giocatore<input id="mPlayer" min="1" type="number" value="68"/></label>
+<label>Livello scienziato<input id="mScientist" min="0" type="number" value="151"/></label>
+<label>Esperto fiscale (%)<input id="mExpert" max="100" min="0" step="0.1" type="number" value="15"/></label>
+<label>Editto (%)<input id="mEdict" step="0.1" type="number" value="3"/></label>
+</div>
+<div class="check"><input checked id="mScribes" type="checkbox"/><label for="mScribes" style="flex-direction:row">Classe burocrate (bonus Scribi)</label></div></section>
+
+<section class="card"><h2><span class="n">2</span>La fabbrica di risorse in cui lavori</h2><p class="hint">Dove fai i turni in risorse. Di partenza: livello 100, sviluppo 8, bonus risorse 7%.</p>
+<div class="fields">
+<label>Tipo di fabbrica<select id="mResource"><option value="gold">🪙 Oro</option><option value="leather">🧥 Pelli</option><option value="oil">🛢️ Petrolio</option><option value="nte">⚗️ NTE</option></select></label>
+<label>Livello della fabbrica<input id="mFactory" min="1" type="number" value="100"/></label>
+<label>Sviluppo provincia (0–10, 11 = «10+»)<input id="mDev" max="11" min="0" type="number" value="8"/></label>
+<label>Bonus provincia (%)<input id="mProv" step="0.1" type="number" value="7"/></label>
+<label>Tassa del Paese (%)<input id="mTax" step="0.1" type="number" value="7"/></label>
+<label>Tassa della Provincia (%)<input id="mTaxP" step="0.1" type="number" value="0"/></label>
+</div>
+<p class="big" style="margin:14px 0 0">Un turno in questa fabbrica produce <b id="resQty">—</b> unità.</p></section>
+
+<section class="card"><h2><span class="n">3</span>La fabbrica di diamanti in cui lavori</h2><p class="hint">Dove lavori negli altri turni. Il denaro per turno lo calcoliamo noi dalla fabbrica.</p>
+<div class="fields">
+<label>Livello della fabbrica<input id="dFactory" min="1" type="number" value="100"/></label>
+<label>Sviluppo provincia (0–10, 11 = «10+»)<input id="dDev" max="11" min="0" type="number" value="8"/></label>
+<label>Bonus provincia (%)<input id="dProv" step="0.1" type="number" value="7"/></label>
+<label>Tassa del Paese (%)<input id="dTax" step="0.1" type="number" value="7"/></label>
+<label>Tassa della Provincia (%)<input id="dTaxP" step="0.1" type="number" value="0"/></label>
+</div>
+<p class="big" style="margin:14px 0 0">Un turno in questa fabbrica rende <b id="diaMoney">—</b> di denaro.</p></section>
+
+<section class="card"><h2><span class="n">4</span>Prezzo della risorsa</h2><p class="hint">Lo inserisci tu: il calcolatore non è collegato al gioco.</p>
+<div class="fields">
+<label><span id="priceLabel">Prezzo di 1 unità</span><input id="price" min="0" step="0.01" type="number" placeholder="es. 150"/></label>
+</div>
+<p class="big" style="margin:14px 0 0">Un turno in risorse rende <b id="resGain">—</b> di denaro.</p></section>
+
+<section class="card"><h2><span class="n">5</span>Diamanti del mese</h2><p class="hint">Quanti diamanti ti avanzano lavorando in diamanti.</p>
+<div class="fields">
+<label>Giorni nel mese<input id="days" min="1" type="number" value="30"/></label>
+<label>Diamanti dalle missioni (al giorno)<input id="missions" min="0" type="number" value="120"/></label>
+<label>Diamanti che hai già<input id="owned" min="0" type="number" value="0"/></label>
+<label>Salute della provincia (indice 0–10+)<input id="health" min="0" step="1" type="number" value="10"/></label>
+<label>Diamanti spesi per ogni turno<input id="dCost" readonly type="text"/></label>
+</div>
+<details><summary>Impostazioni avanzate</summary><div><div class="fields" style="margin-top:12px">
+<label>Turni al giorno<input id="turns" min="1" type="number" value="144"/></label>
+<label>Diamanti prodotti per turno in diamanti<input id="dProd" step="0.1" type="number" value="20"/></label>
+<label>Costo manuale per turno <small>(vuoto = calcolato dalla salute)</small><input id="dCostManual" min="0" step="0.1" type="number" placeholder="es. 18,8"/></label>
+</div><p class="muted">I turni durano 10 minuti. Servono 100 HP per lavorare; gli HP si ricaricano a scatti di 6 minuti (3, 4, 5, 6, 7 HP con salute 0–3, 4–6, 7–9, 10, oltre 10). Il timer riparte a ogni lavoro: in 10 minuti si completa un solo scatto e i 4 minuti restanti vanno persi (osservazione di un giocatore: con salute 7 ogni lavoro costa 19 diamanti). Il resto si compra a 5 pillole per diamante. Salute 10 = 18,8 diamanti a turno.</p></div></details></section>
+
+<section class="card"><h2><span class="n">6</span>Quanti diamanti compri nel mese</h2><p class="hint">Pacchetti del negozio (prezzi in dollari, con sconto di lancio). Lascia 0 se non compri.</p>
+<div class="fields">
+<label>1.000 💎 <small>$0,99</small><input id="q1" min="0" type="number" value="0"/></label>
+<label>5.000 💎 <small>$3,29</small><input id="q2" min="0" type="number" value="0"/></label>
+<label>15.000 💎 <small>$7,59</small><input id="q3" min="0" type="number" value="0"/></label>
+<label>50.000 💎 <small>$21</small><input id="q4" min="0" type="number" value="0"/></label>
+<label>Euro per 1 dollaro<input id="fx" min="0" step="0.01" type="number" value="0.86"/></label>
+</div></section>
+
+<section class="card result"><h2>Risultato del mese</h2>
+<p class="big" id="summary">—</p>
+<div class="scroll"><table><thead><tr><th></th><th>Solo diamanti</th><th>Metodo, senza comprare</th><th>Metodo, con diamanti comprati</th></tr></thead><tbody id="cmp"></tbody></table></div>
+<div class="warn" id="alerts" hidden></div>
+<details><summary>Come è calcolato</summary><div><p class="muted" id="formula"></p></div></details>
+<details><summary>Regole e limiti da conoscere</summary><div><ul>
+<li><b>Solo giocatori Premium</b>: un turno ogni 10 minuti, 144 al giorno. Un non Premium lavora circa ogni 2 ore. Il costo del Premium non è incluso.</li>
+<li><b>Salario al 100%</b>: il guadagno è calcolato con il salario pieno; con un salario più basso il guadagno del lavoratore scende.</li>
+<li><b>Limiti della provincia</b>: ogni turno consuma 0,5 unità del contatore giornaliero (800 al giorno per risorsa, 2.000 per i diamanti) condiviso con gli altri giocatori della provincia. Il calcolo non li applica.</li>
+<li><b>I diamanti non si vendono</b>: servono per le pillole e per far salire di livello le fabbriche, quindi non vengono convertiti in euro. Si mostra solo quanti euro spendi per ogni milione guadagnato in più.</li>
+<li><b>Prezzi</b> dei pacchetti in dollari con sconto di lancio: possono variare, e il cambio in euro è una stima.</li>
+<li>I diamanti comprati si usano una sola volta nel mese: ogni 20 diamanti in più pagano un turno in risorse in più.</li>
+</ul></div></details>
+</section>
+
+<section class="card"><h2><span class="n">7</span>Il tuo orario settimanale</h2><p class="hint">Due proposte pratiche per distribuire i turni in risorse: blocchi lunghi, cambi di fabbrica solo da sveglio, mai di notte.</p>
+<div class="fields">
+<label>Ti svegli alle<input id="wake" type="time" value="07:00"/></label>
+<label>Vai a dormire alle<input id="sleep" type="time" value="23:00"/></label>
+<label>Giorni dei blocchi lunghi (proposta 2)<select id="pair"><option value="we">Sabato e domenica</option><option value="mid">Mercoledì e sabato</option><option value="tf">Martedì e venerdì</option></select></label>
+</div>
+<div id="plans"></div>
+<details><summary>Come funzionano le proposte</summary><div><ul>
+<li>Ogni proposta usa tutti i turni in risorse del metodo (calcolati a settimana) e il resto dei turni li lascia in diamanti.</li>
+<li>I cambi di fabbrica avvengono solo tra la sveglia e mezz'ora prima di dormire; il blocco finisce sempre prima di andare a letto. Durata minima di un blocco: 1 ora.</li>
+<li>Se il blocco in risorse è molto lungo (più di 12 ore), conviene l'inverso: restare in risorse tutta la notte e fare solo un blocco in diamanti di sera. La proposta lo fa da sola.</li>
+<li>Per ogni proposta si simula il mese turno per turno: i diamanti non devono mai finire. Se i diamanti iniziali non bastano, la proposta toglie qualche turno in risorse e lo dice.</li>
+<li>Le missioni giornaliere sono contate a mezzanotte (orario del gioco, circa GMT+3): se vivi in un altro fuso gli orari sono indicativi.</li>
+</ul></div></details>
+</section>
+</div>
+
+<!-- ============ PAGINA 3: COME SONO FATTI I CONTI ============ -->
+<div class="page" id="pageConti">
+<section class="card"><h2>📘 Come sono fatti i conti</h2>
+<p class="hint" style="margin:0 0 10px">Qui trovi tutti i calcoli, passo per passo, con i numeri dei dati che hai inserito. Ogni punto ha uno stato:</p>
+<p style="margin:0"><span class="tag">✅ verificato su dati reali</span><span class="tag">📌 dato del gioco o fornito da un giocatore</span><span class="tag">⚠️ ipotesi o punto non verificato</span></p></section>
+
+<section class="card"><h2>1. Quanto produce un turno ✅</h2>
+<p class="hint">La formula della resa di una fabbrica. Verificata riga per riga su 4 schermate reali di fabbriche di pelle (vedi la prova sotto).</p>
+<ol class="steps">
+<li><b>Produzione base</b> = arrotonda(<i>a</i> + <i>b</i> × livello della fabbrica). I coefficienti sono stati ricavati da osservazioni di gioco: oro 24,83735 + 1,046605 × L; pelli 90,20972 + 3,761137 × L; petrolio 39,593923 + 1,668225 × L; NTE 60,070366 + 2,524993 × L; diamanti 1240,883164 + 51,717301 × L.</li>
+<li><b>Bonus livello giocatore</b> = base × 0,75% × (livello giocatore − 1).</li>
+<li><b>Bonus scienziato</b> = base × 0,5% × livello scienziato (0,25% per i diamanti).</li>
+<li><b>Subtotale</b> = base + bonus livello + bonus scienziato. <b>Bonus provincia</b> = subtotale × percentuale della provincia. <b>Produzione lorda</b> = subtotale + bonus provincia.</li>
+<li><b>Tassa del Paese</b> = lordo × percentuale × (1 − esperto fiscale). Poi <b>tassa della Provincia</b> = (lordo − tassa del Paese) × percentuale × (1 − esperto fiscale). Le due tasse sono una dopo l'altra, non sommate.</li>
+<li><b>Bonus sviluppo</b> = quantità dopo le tasse × 2% × livello di sviluppo (3% per i diamanti, livello massimo 10). <b>Bonus editto</b> = quantità dopo le tasse × percentuale dell'editto.</li>
+<li><b>Salario</b>: la somma fin qui viene moltiplicata per la percentuale di salario del lavoratore. Poi <b>bonus Scribi</b>: +10% (+20% per i diamanti) sul risultato.</li>
+<li>Ogni riga viene <b>troncata</b> (si tiene la parte intera), come fa il gioco.</li>
+</ol>
+<h3 class="sub">Esempio con i tuoi dati: fabbrica di risorse</h3>
+<table><tbody id="cExRes"></tbody></table>
+<h3 class="sub">Prova su 4 schermate reali di pelle (giocatore 85, scienziato 234, esperto fiscale 15%, editto 10%, Scribi)</h3>
+<div class="scroll"><table><thead><tr><th>Fabbrica</th><th>Valore mostrato dal gioco</th><th>Calcolato qui</th><th>Scarto</th></tr></thead><tbody id="cVerify"></tbody></table></div>
+<p class="muted">Gli scarti piccoli dipendono dal bonus provincia: il gioco lo mostra arrotondato (per esempio «16%» è in realtà circa 15,9%). Usando l'importo del bonus provincia mostrato dal gioco, tutte e quattro le schermate tornano esatte riga per riga. Il livello della fabbrica si ricava dai diamanti di potenziamento (5 × L + 10) e dall'esperienza (2.500 × (1,06^L − 1)).</p></section>
+
+<section class="card"><h2>2. Il denaro di un turno in diamanti ✅ ⚠️</h2>
+<p class="hint">La fabbrica di diamanti usa la stessa formula, con i coefficienti dei diamanti. Il risultato è il denaro che incassi per turno.</p>
+<table><tbody id="cExDia"></tbody></table>
+<p class="muted">✅ La formula con i coefficienti dei diamanti è stata controllata su campioni di gioco (dossier economico, caso Romagna: 9.917 calcolato contro 9.914 osservato). ⚠️ Che questa produzione sia «denaro» è un'interpretazione ricavata da quei campioni; le schermate recenti verificate sono solo di pelle.</p></section>
+
+<section class="card"><h2>3. Quanto costa un turno in diamanti 📌</h2>
+<p class="hint">Per lavorare servono 100 HP per turno (le «pillole»). Gli HP si ricaricano con il tempo secondo la salute della provincia; il resto si compra a 5 pillole per 1 diamante.</p>
+<ol class="steps">
+<li>HP rigenerati in un turno = HP per scatto × scatti completi in 10 minuti. Ne entra uno solo: il timer di 6 minuti riparte a ogni lavoro e i 4 minuti restanti vanno persi.</li>
+<li>Pillole da comprare = 100 − HP rigenerati.</li>
+<li>Costo in diamanti = pillole ÷ 5.</li>
+</ol>
+<div class="scroll"><table><thead><tr><th>Salute della provincia</th><th>HP ogni 6 minuti</th><th>Pillole per turno</th><th>Diamanti per turno</th></tr></thead><tbody id="cHealth"></tbody></table></div>
+<p class="muted">Con salute 10 un turno costa 18,8 diamanti (il valore usato come esempio nei calcoli); con salute 7–9 sono 19. ⚠️ Il timer che riparte a ogni lavoro (e fa perdere i 4 minuti restanti) è un'osservazione di un giocatore: coincide con i costi che usano i giocatori, ma la wiki non lo spiega. Le guide indicano valori diversi alla salute 10 e oltre (5, 6 o 7 HP): da verificare.</p></section>
+
+<section class="card"><h2>4. Quanti turni in risorse puoi fare ✅</h2>
+<p class="hint">Aritmetica semplice, controllata con una simulazione turno per turno.</p>
+<ol class="steps">
+<li>Lavorando in diamanti ogni turno produce <b>P</b> diamanti (20) e ne costa <b>S</b> (18,8 con salute 10): restano <b>P − S</b> = 1,2 diamanti. Con 144 turni al giorno sono circa 173 diamanti.</li>
+<li>Si aggiungono le <b>missioni</b> (120 al giorno), i diamanti che hai già e quelli che compri.</li>
+<li>Un turno in <b>risorse</b> non produce diamanti e ne costa <b>S</b>. Spostare un turno dai diamanti alle risorse fa quindi perdere i <b>P</b> diamanti che avrebbe prodotto.</li>
+<li><b>Turni in risorse</b> = diamanti disponibili ÷ P, arrotondato per difetto, al massimo tutti i turni.</li>
+</ol>
+<h3 class="sub">Con i tuoi dati</h3>
+<table><tbody id="cBudget"></tbody></table>
+<p class="muted">Con i valori di partenza (30 giorni, 120 missioni, salute 10) il pareggio è 14,64 turni in risorse al giorno: 14 interi sostenibili, 15 no (+12,8 diamanti avanzati con 14). Dati comunicati da giocatori di una community (FN) e riconfermati dall'utente.</p></section>
+
+<section class="card"><h2>5. Quanto guadagni ⚠️</h2>
+<ol class="steps">
+<li>Guadagno di un turno in risorse = quantità prodotta × prezzo di 1 unità (il prezzo lo inserisce chi usa il calcolatore). La scheda «Resa fabbrica» mostra lo stesso valore in denaro per il turno e per la quota del lavoratore.</li>
+<li>Guadagno di un turno in diamanti = denaro calcolato al punto 2.</li>
+<li><b>Guadagno del mese</b> = turni in risorse × guadagno per turno in risorse + turni in diamanti × guadagno per turno in diamanti.</li>
+<li><b>Guadagno in più</b> = guadagno del mese con il metodo − guadagno lavorando solo in diamanti.</li>
+</ol>
+<p class="muted">⚠️ Il salario è al 100%. I limiti giornalieri della provincia (0,5 unità per turno; 800 al giorno per risorsa, 2.000 per i diamanti) non sono applicati. I diamanti non si vendono: non si convertono in euro.</p></section>
+
+<section class="card"><h2>6. Acquisto dei diamanti 📌</h2>
+<ol class="steps">
+<li>Pacchetti del negozio (sconto di lancio): 1.000 💎 = $0,99; 5.000 💎 = $3,29; 15.000 💎 = $7,59; 50.000 💎 = $21. I prezzi possono variare.</li>
+<li>Euro spesi = dollari × cambio (0,86 di partenza, una stima).</li>
+<li>I diamanti comprati si aggiungono ai diamanti disponibili del mese: <b>ogni 20 diamanti pagano un turno in risorse in più</b>.</li>
+<li>Si mostra <b>quanti euro spendi per ogni milione di denaro guadagnato in più</b>, senza dire se conviene.</li>
+</ol></section>
+
+<section class="card"><h2>7. Come nasce l'orario settimanale ✅</h2>
+<ol class="steps">
+<li>Turni in risorse a settimana = turni del mese × 7 ÷ giorni del mese.</li>
+<li>Proposta 1: i turni sono divisi in blocchi uguali, uno al giorno, che finiscono mezz'ora prima di andare a dormire. Proposta 2: gli stessi turni sono concentrati in pochi giorni.</li>
+<li>Se un blocco in risorse sarebbe troppo lungo per stare da svegli, si inverte: si resta in risorse di notte e si fa un blocco in diamanti di giorno.</li>
+<li>I cambi di fabbrica cadono sempre tra la sveglia e mezz'ora prima di dormire; ogni blocco dura almeno un'ora.</li>
+<li>Si simula il mese turno per turno: se i diamanti finiscono, i turni in risorse vengono ridotti finché il saldo resta positivo.</li>
+</ol></section>
+
+<section class="card"><h2>8. Limiti e differenze con la wiki ufficiale ⚠️</h2>
+<p class="hint">Confronto con la wiki del gioco (letta il 18 ottobre 2026, ultima modifica giugno 2026). Dove la wiki e le schermate reali sono diverse, valgono le schermate.</p>
+<ul style="margin:0;padding-left:18px;color:#d3def0;font-size:.92rem">
+<li><b>Limiti giornalieri della regione</b> (wiki): diamanti 2.000 al giorno; pelle, oro, petrolio, NTE 800 al giorno ciascuno; ogni lavoro li riduce di 0,5; azzeramento a mezzanotte (fuso non indicato). Sono <b>condivisi tra tutti i giocatori della regione</b>: 800 ÷ 0,5 = 1.600 lavori al giorno per risorsa e 2.000 ÷ 0,5 = 4.000 lavori in diamanti, cioè circa 28 giocatori che lavorano 144 turni. Se altri esauriscono il limite, il tuo lavoro potrebbe non essere possibile. Il calcolatore non lo applica.</li>
+<li><b>Salute / ospedale</b> (wiki): 1–3 → 3 HP ogni 6 minuti; 4–6 → 4; 7 e oltre → 5 (livello 0 → nessuna rigenerazione). Il calcolatore usa anche 6 HP a salute 10 e 7 oltre 10, valori delle guide dei giocatori che la wiki non conferma. In ogni lavoro entra un solo scatto di ricarica (il timer riparte a ogni lavoro): con 5 HP un turno costa 19 diamanti.</li>
+<li><b>Pillole</b> (wiki): 1 HP ciascuna, con 10 minuti di attesa tra una e l'altra: coerente con un turno ogni 10 minuti, da chiarire come si comprano 94 pillole per turno.</li>
+<li><b>Produzione di base</b>: la wiki riporta valori al livello 1 (pelle 180, oro 50, petrolio 80, NTE 120) e «+50% ogni 10 livelli, +5% a ogni livello» che non coincidono con le schermate attuali: per questo i coefficienti qui sono quelli ricavati dalle schermate.</li>
+<li><b>Fabbrica di diamanti</b> (wiki, livello 1): «20 diamanti + 2.000 di denaro» per lavoro: conferma che produce diamanti e denaro insieme. La formula del denaro ai livelli alti non è stata verificata su schermate.</li>
+<li><b>Sviluppo 10+</b> (wiki, strada oltre il livello 10): +30% per le risorse e +40% per i diamanti. Il calcolatore lo accetta mettendo 11 nel campo sviluppo. Da verificare se vale per tutte le province.</li>
+<li><b>Potenziamento e XP</b> (wiki): upgrade = 10 + 5 × livello diamanti (massimo livello 200); 100 XP a ogni lavoro: coincide con i calcoli usati qui.</li>
+</ul></section>
+
+<section class="card"><h2>Domande di chi non si fida</h2>
+<details open><summary>Perché ogni turno spostato in risorse costa 20 diamanti e non 18,8?</summary><div><p class="muted">Perché in diamanti il turno costa 18,8 (con salute 10) ma ne produce 20, quindi ne avanzano 1,2. In risorse il costo resta 18,8 e non produci niente: la differenza fra i due casi è 20 (1,2 + 18,8). Il calcolo tiene conto di tutti e due.</p></div></details>
+<details><summary>Come sapete che la formula della resa è giusta?</summary><div><p class="muted">I coefficienti vengono da osservazioni di gioco e la catena di calcolo (due tasse in sequenza, righe troncate, salario prima degli Scribi) è stata confrontata con 4 schermate reali di fabbriche di pelle di livelli diversi (45, 85, 100, 128): tutte tornano riga per riga. Per le altre risorse i coefficienti sono verificati su campioni più vecchi, non sulle schermate recenti.</p></div></details>
+<details><summary>Perché i diamanti non sono convertiti in euro?</summary><div><p class="muted">Perché nel gioco non si possono vendere: servono per le pillole e per far salire di livello le fabbriche. Convertirli in euro darebbe un valore che non si può incassare.</p></div></details>
+<details><summary>Cosa non è verificato?</summary><div><ul>
+<li>I limiti giornalieri della provincia non sono applicati.</li>
+<li>Il valore di salute 10 e oltre (HP ogni 6 minuti): la wiki dice 5, le guide dei giocatori 6 e 7.</li>
+<li>Che la produzione della fabbrica di diamanti coincida con il denaro incassato.</li>
+<li>Il costo dell'account Premium (necessario per 144 turni al giorno) non è incluso.</li>
+<li>Gli orari seguono l'orario del gioco (circa GMT+3): in altri fusi sono indicativi.</li>
+</ul></div></details>
+<details><summary>Quanto è preciso?</summary><div><p class="muted">Per un singolo turno lo scarto è di poche unità (sotto lo 0,35% nelle prove); sul mese gli errori si sommano ma restano dello stesso ordine. Il guadagno dipende soprattutto dai prezzi che inserisci.</p></div></details>
+<p class="muted" style="margin-top:12px">Non affiliato a Diplomacia. Fonti: osservazioni dei giocatori, wiki del gioco, dossier economico v0.7, dati della community FN.</p></section>
+</div>
+
+</main>
+<script>
+const storage={getItem(k){try{return localStorage.getItem(k)}catch(e){return null}},setItem(k,v){try{localStorage.setItem(k,v)}catch(e){}}};
+const $=id=>document.getElementById(id);
+const fmt=n=>new Intl.NumberFormat('it-IT',{maximumFractionDigits:2}).format(Object.is(n,-0)?0:n);
+const eur=n=>new Intl.NumberFormat('it-IT',{style:'currency',currency:'EUR'}).format(n);
+const coeff={gold:[24.837350,1.046605],leather:[90.209720,3.761137],oil:[39.593923,1.668225],nte:[60.070366,2.524993],diamonds:[1240.883164,51.717301]};
+const RES_NAMES={gold:'oro',leather:'pelle',oil:'petrolio',nte:'NTE',diamonds:'diamanti'};
+const ids=['resource','factory','province','development','edict','tax','taxP','salary','scribes','player','scientist','expert'];
+const ids2=['mResource','mFactory','mDev','mProv','mTax','mTaxP','mPlayer','mScientist','mExpert','mEdict','mScribes','dFactory','dDev','dProv','dTax','dTaxP','days','missions','owned','health','turns','dProd','dCostManual','q1','q2','q3','q4','fx','wake','sleep','pair'];
+const PACKS=[{d:1000,usd:0.99,id:'q1'},{d:5000,usd:3.29,id:'q2'},{d:15000,usd:7.59,id:'q3'},{d:50000,usd:21,id:'q4'}];
+let prices={gold:'',leather:'',oil:'',nte:''};
+
+// Produzione di un turno. Formula verificata su schermate reali: ogni riga è troncata, due tasse in sequenza.
+function calculate(p){const cl=(v,lo,hi)=>Math.min(hi,Math.max(lo,Number(v)||0)),fl=Math.floor,diam=p.resource==='diamonds',F=Math.max(1,Number(p.factory)||1),b=Math.round(coeff[p.resource][0]+coeff[p.resource][1]*F),level=fl(b*.0075*Math.max(0,cl(p.player,1,1e6)-1)),scientist=fl(b*(diam?.0025:.005)*cl(p.scientist,0,1e6)),subtotal=b+level+scientist,prov=fl(subtotal*cl(p.province,0,1e4)/100),gross=subtotal+prov,exp=1-cl(p.expert,0,100)/100,taxC=fl(gross*cl(p.tax,0,100)/100*exp),r1=gross-taxC,taxP=fl(r1*cl(p.taxP,0,100)/100*exp),after=r1-taxP,dv=Number(p.development)||0,devRate=dv>10?(diam?.4:.3):(diam?.03:.02)*Math.max(0,fl(dv)),dev=fl(after*devRate),edict=fl(after*cl(p.edict,0,1e4)/100),before=after+dev+edict,sc=p.scribes?(diam?.2:.1):0,scribe=fl(before*sc),total=before+scribe,w=fl(before*cl(p.salary,1,100)/100),worker=w+fl(w*sc);return{b,level,scientist,subtotal,prov,gross,taxC,taxP,after,dev,edict,before,scribe,total,worker}}
+const read=()=>Object.fromEntries(ids.map(id=>[id,$(id).type==='checkbox'?$(id).checked:$(id).value]));
+
+function renderYield(){const p=read(),c=calculate(p),rate=p.resource==='diamonds'?3:2,lv=Math.max(0,Math.floor(Number(p.development)||0));
+$('developmentBonus').value='+'+fmt(lv>10?(p.resource==='diamonds'?40:30):lv*rate)+'%'+(lv>10?' (10+)':'');
+ const isDia=p.resource==='diamonds',pr=isDia?1:(+prices[p.resource]||0);
+ $('priceRLabel').textContent=isDia?'Prezzo (non serve per i diamanti)':'Prezzo di 1 unità di '+RES_NAMES[p.resource];$('priceR').value=isDia?'':prices[p.resource];$('priceR').disabled=isDia;
+ $('valTotal').textContent=(isDia||pr>0)?fmt(Math.round(c.total*pr)):'—';$('valWorker').textContent=(isDia||pr>0)?fmt(Math.round(c.worker*pr)):'—';
+ $('priceRNote').textContent=isDia?'La produzione della fabbrica di diamanti è già denaro: il valore coincide con la produzione.':(pr>0?'Valore = produzione × prezzo di 1 unità ('+fmt(pr)+').':'Inserisci il prezzo per vedere il valore in denaro.');$('total').textContent=fmt(Math.round(c.total));$('worker').textContent=fmt(Math.round(c.worker));$('base').textContent=fmt(c.b);
+const steps=[['Produzione base',c.b],['Bonus livello giocatore',c.level],['Bonus scienziato',c.scientist],['Subtotale',c.subtotal],['Bonus provincia',c.prov],['Produzione lorda',c.gross],["Tassa del Paese (ridotta dall'esperto fiscale)",-c.taxC||0],['Tassa della Provincia (sul resto)',-c.taxP||0],['Dopo le tasse',c.after],['Bonus sviluppo',c.dev],['Bonus editto',c.edict],['Prima degli Scribi',c.before],['Bonus Scribi',c.scribe],['Produzione totale',c.total],['Quota del lavoratore (salario)',c.worker]];
+$('steps').innerHTML=steps.map(([k,v])=>'<tr><td>'+k+'</td><td>'+fmt(v)+'</td></tr>').join('');}
+
+// ---------- Metodo di lavoro ----------
+const person=()=>({salary:100,scribes:$('mScribes').checked,player:$('mPlayer').value,scientist:$('mScientist').value,expert:$('mExpert').value,edict:$('mEdict').value});
+function mParams(){return{...person(),resource:$('mResource').value,factory:$('mFactory').value,province:$('mProv').value,development:$('mDev').value,tax:$('mTax').value,taxP:$('mTaxP').value}}
+function dParams(){return{...person(),resource:'diamonds',factory:$('dFactory').value,province:$('dProv').value,development:$('dDev').value,tax:$('dTax').value,taxP:$('dTaxP').value}}
+const mQty=()=>Math.round(calculate(mParams()).total);
+const diaMoney=()=>Math.round(calculate(dParams()).total);
+const priceNow=()=>+prices[$('mResource').value]||0;
+const resGainNow=()=>mQty()*priceNow();
+const healthRate=i=>{i=Math.floor(+i||0);return i<=3?3:i<=6?4:i<=9?5:i===10?6:7};
+function costNow(){const man=$('dCostManual').value;if(man!=='')return Math.max(0,+man||0);const regen=healthRate($('health').value)*Math.floor(10/6);return Math.max(0,100-regen)/5}
+function model(D){const days=Math.max(1,Math.floor(+$('days').value)||1),T=+$('turns').value||0,P=+$('dProd').value||0,S=costNow(),M=+$('missions').value||0,own=+$('owned').value||0,res=resGainNow(),dia=diaMoney();
+ const Ttot=days*T,base=days*(T*(P-S)+M)+own,budget=base+D,x=P>0?Math.max(0,Math.min(Ttot,Math.floor(budget/P))):0;
+ return{days,T,P,S,M,own,res,dia,Ttot,base,budget,x,left:budget-P*x,gain:x*res+(Ttot-x)*dia};}
+
+// ---------- Orario settimanale ----------
+const SLOTS=144,DAYN=['Lunedì','Martedì','Mercoledì','Giovedì','Venerdì','Sabato','Domenica'];
+const hm=s=>{const m=Math.round(s)*10;return String(Math.floor(m/60)%24).padStart(2,'0')+':'+String(m%60).padStart(2,'0')};
+const dur=t=>{const m=t*10,h=Math.floor(m/60),r=m%60;return h?(h+' h'+(r?' '+r+' min':'')):(r+' min')};
+const toSlot=v=>{const m=/^(\d{1,2}):(\d{2})$/.exec(v||'');return m?Math.round((+m[1]*60+ +m[2])/10):null};
+const PAIRS={we:[5,6,4,3,2,1,0],mid:[2,5,1,4,0,3,6],tf:[1,4,0,3,2,5,6]};
+function windowSlots(){let w=toSlot($('wake').value),s=toSlot($('sleep').value),def=false;if(w===null||s===null){w=42;s=138;def=true}else{if(s<=w)s+=SLOTS;if(s-w<18||s-w>SLOTS-6){w=42;s=138;def=true}}return{wake:w,sleep:s,end:s-3,maxIn:Math.max(6,s-w-6),def}}
+function distribute(kind,X){ // turni in risorse per giorno della settimana
+ const per=Array(7).fill(0);if(X<=0)return per;
+ let list;
+ if(kind==='A'){const K=Math.min(7,Math.max(1,Math.floor(X/6)));list=[0,2,4,6,1,3,5].slice(0,K).sort((x,y)=>x-y)}
+ else{const K=Math.min(7,Math.max(2,Math.ceil(X/120)),Math.max(1,Math.floor(X/6)));list=PAIRS[$('pair').value].slice(0,K).sort((x,y)=>x-y)}
+ const base=Math.floor(X/list.length),rem=X-base*list.length;
+ list.forEach((d,i)=>{per[d]=base+(i===list.length-1?rem:0)});return per}
+// Costruisce la settimana come linea del tempo continua (1008 turni): arr[i]=1 se il turno i è in risorse.
+function buildPlan(kind,X,W){
+ const per=distribute(kind,X),arr=new Uint8Array(7*SLOTS),W7=7*SLOTS;
+ const mark=(s,e)=>{for(let t=s;t<e;t++)arr[((t%W7)+W7)%W7]=1};
+ per.forEach((r,d)=>{if(r<=0)return;const e0=d*SLOTS+W.end;
+  if(r>=SLOTS-5)mark(e0-SLOTS,e0);
+  else if(r<=Math.min(W.maxIn,72))mark(e0-r,e0);
+  else{const dl=SLOTS-r;if(dl<=W.maxIn)mark(e0-SLOTS,e0-dl);else mark(e0-W.maxIn,e0)}});
+ return arr}
+const countRes=arr=>arr.reduce((a,v)=>a+v,0);
+function simulate(arr,P,S,M,start,nDays){let stock=start,minPre=Infinity;
+ for(let dd=0;dd<nDays;dd++)for(let t=0;t<SLOTS;t++){if(t===0)stock+=M;minPre=Math.min(minPre,stock-S);
+  if(arr[(dd*SLOTS+t)%(7*SLOTS)])stock-=S;else stock+=P-S}
+ return{minPre,end:stock}}
+function fitPlan(kind,Xw,W,P,S,M,start,nDays){let X=Xw,arr,sim;
+ for(;;){arr=buildPlan(kind,X,W);sim=simulate(arr,P,S,M,start,nDays);if(sim.minPre>=-1e-9||X<=0)break;X--}
+ return{X,arr,sim,turns:countRes(arr)}}
+function events(arr){const W7=7*SLOTS,ev=[];for(let i=0;i<W7;i++){const p=arr[(i-1+W7)%W7];if(arr[i]!==p)ev.push({slot:i,toRes:arr[i]===1})}return ev}
+function describeWeek(arr,rn){const ev=events(arr);
+ return DAYN.map((nm,d)=>{const startRes=arr[d*SLOTS]===1,es=ev.filter(e=>Math.floor(e.slot/SLOTS)===d);
+  let txt;
+  if(!es.length)txt=startRes?'Nessun cambio: resti in <b>'+rn+'</b> tutto il giorno e tutta la notte.':'Nessun cambio: resti in <b>diamanti</b>.';
+  else{const parts=es.map(e=>'<b>'+hm(e.slot%SLOTS)+'</b> '+(e.toRes?'passa alla fabbrica di <b>'+rn+'</b>':'torna alla fabbrica di <b>diamanti</b>'));
+   txt=(startRes?'Dalla notte sei in <b>'+rn+'</b>. ':'')+parts.join(' · ')+'.'}
+  return[nm,txt]})}
+function renderPlans(b,w,D){
+ const W=windowSlots(),nDays=w.days,Xw=Math.min(1008,Math.floor(w.x*7/w.days)),rn=RES_NAMES[$('mResource').value];
+ const res=w.res,dia=w.dia,week=7*SLOTS;
+ if(Xw<6){$('plans').innerHTML='<div class="warn">Con questi diamanti i turni in risorse sono meno di 6 a settimana (meno di 1 ora): non vale la pena cambiare fabbrica. Lavora solo in diamanti, oppure compra altri diamanti.</div>';return}
+ const start=w.own+D,defs=[
+  {k:'A',t:'Proposta 1 · Un blocco ogni giorno, la sera',d:'Poche ore al giorno in risorse, sempre alla stessa ora e prima di andare a letto: facile da ricordare, due cambi al giorno. Se i turni sono tanti, si resta in risorse anche di notte e si fa un blocco in diamanti di giorno.'},
+  {k:'B',t:'Proposta 2 · Pochi blocchi lunghi',d:'Tutti i turni in risorse concentrati in pochi giorni (di solito il weekend), il resto della settimana solo diamanti: pochissimi cambi. Servono i diamanti accumulati nei giorni prima.'}];
+ let html=W.def?'<div class="warn">Gli orari inseriti non sono validi (servono almeno 4 ore da sveglio): uso 07:00–23:00.</div>':'';
+ for(const f of defs){const fit=fitPlan(f.k,Xw,W,w.P,w.S,w.M,start,nDays);
+  const ev=events(fit.arr),sw=ev.length,hours=fit.turns*10/60,gainW=fit.turns*res+(week-fit.turns)*dia,onlyDia=week*dia;
+  html+='<div class="prop"><h3>'+f.t+'</h3><p>'+f.d+'</p>'
+   +'<span class="tag">'+fit.turns+' turni in risorse a settimana ('+fmt(Math.round(hours*10)/10)+' h)</span><span class="tag">'+sw+' cambi di fabbrica a settimana</span><span class="tag">Guadagno stimato a settimana: '+fmt(Math.round(gainW))+' ('+(gainW-onlyDia>=0?'+':'')+fmt(Math.round(gainW-onlyDia))+' rispetto a solo diamanti)</span>'
+   +'<div class="scroll"><table class="plan" style="margin-top:8px"><tbody>'+describeWeek(fit.arr,rn).map(r=>'<tr><td>'+r[0]+'</td><td>'+r[1]+'</td></tr>').join('')+'</tbody></table></div>';
+  if(fit.sim.minPre<-1e-6)html+='<div class="warn">Anche senza turni in risorse, per cominciare a lavorare servono almeno <b>'+fmt(Math.ceil(start-fit.sim.minPre))+'</b> diamanti all\'inizio (le missioni da sole non bastano a pagare il primo turno): hai '+fmt(start)+'.</div>';
+  else if(fit.turns<Xw-1)html+='<div class="warn">Per non restare mai senza diamanti ho ridotto i turni in risorse da '+Xw+' a '+fit.turns+' a settimana: all\'inizio i diamanti che hai non bastano a coprire tutti i blocchi. Aggiungi diamanti iniziali o parti dopo qualche giorno.</div>';
+  html+='</div>'}
+ $('plans').innerHTML=html;}
+
+function renderMetodo(){
+ const r=$('mResource').value;
+ $('priceLabel').textContent='Prezzo di 1 unità di '+RES_NAMES[r];$('price').value=prices[r];
+ $('resQty').textContent=fmt(mQty());$('resGain').textContent=fmt(resGainNow());$('diaMoney').textContent=fmt(diaMoney());
+ $('dCost').value=fmt(costNow())+' 💎 ('+healthRate($('health').value)+' HP ogni 6 min)';
+ let D=0,usd=0;for(const k of PACKS){const q=Math.max(0,Math.floor(+$(k.id).value||0));D+=q*k.d;usd+=q*k.usd}
+ const cost=usd*(+$('fx').value||0),b=model(0),w=model(D),sd=b.Ttot*b.dia,df=v=>(v>=0?'+':'')+fmt(Math.round(v));
+ const rows=[
+  ['Turni in risorse nel mese','0',fmt(b.x),fmt(w.x)],
+  ['Turni in diamanti nel mese',fmt(b.Ttot),fmt(b.Ttot-b.x),fmt(w.Ttot-w.x)],
+  ['Turni in risorse al giorno (media)','0',fmt(Math.round(b.x/b.days*100)/100),fmt(Math.round(w.x/w.days*100)/100)],
+  ['Guadagno del mese (denaro)',fmt(Math.round(sd)),fmt(Math.round(b.gain)),fmt(Math.round(w.gain))],
+  ['<b>Guadagno in più rispetto a solo diamanti</b>','—','<b>'+df(b.gain-sd)+'</b>','<b>'+df(w.gain-sd)+'</b>'],
+  ['Diamanti comprati','0','0',fmt(D)],
+  ['Spesa in euro','0 €','0 €',eur(cost)],
+  ['Euro spesi per ogni milione guadagnato in più (rispetto al metodo senza comprare)','—','—',(cost>0&&w.gain>b.gain)?eur(cost/((w.gain-b.gain)/1e6)):'—']];
+ $('cmp').innerHTML=rows.map((x,i)=>'<tr'+(i===4?' class="diff"':'')+'><td>'+x[0]+'</td><td>'+x[1]+'</td><td>'+x[2]+'</td><td>'+x[3]+'</td></tr>').join('');
+ $('summary').innerHTML='Con il metodo, senza comprare nulla, fai <b>'+fmt(b.x)+'</b> turni in risorse su '+fmt(b.Ttot)+' nel mese e guadagni <b>'+df(b.gain-sd)+'</b> rispetto a lavorare solo in diamanti.'+(D>0?' Comprando <b>'+fmt(D)+'</b> diamanti ('+eur(cost)+') fai <b>'+fmt(w.x)+'</b> turni in risorse e guadagni <b>'+df(w.gain-sd)+'</b>.':'');
+ const al=[];
+ if(priceNow()<=0)al.push('Inserisci il prezzo della risorsa: senza prezzo il guadagno dei turni in risorse vale 0 e il confronto non è valido.');
+ if(w.S>=w.P)al.push('Ogni turno costa più diamanti di quanti ne produce: i turni in risorse non sono sostenibili con questi valori.');
+ const need=Math.max(0,w.Ttot*w.P-w.base);
+ if(w.x>=w.Ttot)al.push('Con questi diamanti tutti i turni del mese sono in risorse: altri diamanti non servono.');
+ else if(need>D)al.push('Per fare tutti i turni del mese in risorse servirebbero circa '+fmt(Math.ceil(need))+' diamanti comprati (te ne mancano '+fmt(Math.ceil(need-D))+').');
+ $('alerts').hidden=!al.length;$('alerts').innerHTML=al.join('<br>');
+ $('formula').textContent='Diamanti disponibili nel mese = giorni × (turni × (prodotti − spesi) + missioni) + diamanti che hai già + diamanti comprati. Turni in risorse = diamanti disponibili ÷ '+fmt(w.P)+' (ogni turno spostato dai diamanti alle risorse fa perdere i '+fmt(w.P)+' diamanti che avrebbe prodotto), arrotondato per difetto e al massimo tutti i turni del mese. Senza acquisti il pareggio è '+fmt(b.budget/(b.P||1)/b.days)+' turni in risorse al giorno. Guadagno = turni in risorse × guadagno per turno in risorse + turni in diamanti × denaro per turno della fabbrica di diamanti.';
+ renderPlans(b,w,D);
+}
+
+// ---------- Pagina «Come sono fatti i conti» ----------
+function stepRows(c,diam){return[['Produzione base',c.b],['Bonus livello giocatore',c.level],['Bonus scienziato',c.scientist],['Subtotale',c.subtotal],['Bonus provincia',c.prov],['Produzione lorda',c.gross],['Tassa del Paese',0-c.taxC||0],['Tassa della Provincia',0-c.taxP||0],['Dopo le tasse',c.after],['Bonus sviluppo',c.dev],['Bonus editto',c.edict],['Prima degli Scribi',c.before],['Bonus Scribi',c.scribe],['<b>Produzione totale</b>',c.total]].map(([k,v])=>'<tr><td>'+k+'</td><td>'+fmt(v)+'</td></tr>').join('')}
+const VERIFY=[['Livello 85 · Amasya',{factory:85,province:20,tax:100,taxP:3,development:10},288],['Livello 128 · Caracas',{factory:128,province:10,tax:0,taxP:0,development:10},2516],['Livello 100 · Firenze',{factory:100,province:16,tax:7,taxP:0,development:5},1876],['Livello 45 · Serbia (salario 95%)',{factory:45,province:10,tax:6,taxP:10,development:4,salary:95},850]];
+function renderConti(){
+ $('cExRes').innerHTML=stepRows(calculate(mParams()));
+ $('cExDia').innerHTML=stepRows(calculate(dParams()));
+ $('cVerify').innerHTML=VERIFY.map(([n,o,obs])=>{const c=calculate({resource:'leather',salary:100,scribes:true,player:85,scientist:234,expert:15,edict:10,...o}),v=Math.round(c.worker);return'<tr><td>'+n+'</td><td>'+fmt(obs)+'</td><td>'+fmt(v)+'</td><td>'+(v-obs>=0?'+':'')+fmt(v-obs)+' ('+fmt(Math.round((v-obs)/obs*10000)/100)+'%)</td></tr>'}).join('');
+ $('cHealth').innerHTML=[[2,'0–3'],[5,'4–6'],[8,'7–9'],[10,'10'],[12,'oltre 10']].map(([i,l])=>{const hp=healthRate(i),pills=100-hp*Math.floor(10/6);return'<tr><td>'+l+'</td><td>'+hp+'</td><td>'+pills+'</td><td>'+fmt(pills/5)+'</td></tr>'}).join('');
+ const m=model(0),days=m.days;
+ $('cBudget').innerHTML=[['Giorni nel mese',fmt(days)],['Turni totali',fmt(m.Ttot)],['Diamanti prodotti per turno (P)',fmt(m.P)],['Diamanti spesi per turno (S)',fmt(m.S)],['Avanzo per turno in diamanti (P − S)',fmt(Math.round((m.P-m.S)*100)/100)],['Diamanti dai turni in diamanti nel mese',fmt(Math.round(days*m.T*(m.P-m.S)))],['Missioni nel mese',fmt(days*m.M)],['Diamanti che hai già',fmt(m.own)],['<b>Diamanti disponibili (senza acquisti)</b>',fmt(Math.round(m.base))],['Turni in risorse = disponibili ÷ P, per difetto',fmt(m.x)],['Turni in risorse al giorno (media)',fmt(Math.round(m.x/days*100)/100)]].map(([k,v])=>'<tr><td>'+k+'</td><td>'+v+'</td></tr>').join('');
+}
+function save(){const o={prices};[...ids,...ids2].forEach(id=>o[id]=$(id).type==='checkbox'?$(id).checked:$(id).value);storage.setItem('diplomacia-calcolatore-v2',JSON.stringify(o))}
+function renderAll(){renderYield();renderMetodo();renderConti();save()}
+let stored;try{stored=JSON.parse(storage.getItem('diplomacia-calcolatore-v2')||'null')}catch(e){}
+if(stored){if(stored.prices)prices={...prices,...stored.prices};Object.entries(stored).forEach(([k,v])=>{const el=$(k);if(!el||k==='prices')return;if(el.type==='checkbox')el.checked=v;else el.value=v})}
+[...ids,...ids2].forEach(id=>$(id).addEventListener('input',renderAll));
+$('price').addEventListener('input',()=>{prices[$('mResource').value]=$('price').value;renderAll()});
+$('priceR').addEventListener('input',()=>{const r=$('resource').value;if(r!=='diamonds'){prices[r]=$('priceR').value;renderAll()}});
+function showPage(){const h=location.hash,pg=h==='#metodo'?'Metodo':h==='#conti'?'Conti':'Resa';['Resa','Metodo','Conti'].forEach(x=>{$('page'+x).classList.toggle('on',x===pg);$('tab'+x).classList.toggle('on',x===pg)});window.scrollTo(0,0)}
+window.addEventListener('hashchange',showPage);['tabResa','tabMetodo','tabConti'].forEach(id=>$(id).addEventListener('click',()=>setTimeout(showPage,0)));
+showPage();renderAll();
+</script></body></html>
